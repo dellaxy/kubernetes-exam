@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import base64
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -17,7 +18,7 @@ def allowed_file_size(file):
     return size <= int(MAX_FILE_SIZE)
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])  # Remove '/api' prefix
 def upload_file():
     if 'image' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
@@ -40,10 +41,19 @@ def upload_file():
 def get_images():
     try:
         files = os.listdir(UPLOAD_FOLDER)
-        images = [f for f in files if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+        images = []
+        for filename in files:
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                with open(file_path, "rb") as image_file:
+                    encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+                    images.append({
+                        'filename': filename,
+                        'data': encoded_string
+                    })
         return jsonify({'images': images}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Add host binding

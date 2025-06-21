@@ -1,7 +1,11 @@
-const BACKEND_URL = 'http://localhost:30050';
+const BACKEND_URL = '/api';
 document.getElementById('uploadForm').addEventListener('submit', function (e) {
     e.preventDefault();
     uploadImage();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadImagesFromServer();
 });
 
 function uploadImage() {
@@ -16,9 +20,19 @@ function uploadImage() {
     fetch(`${BACKEND_URL}/upload`, {
         method: 'POST',
         body: formData
-    }).then(response => {
+    }).then(async response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.text().then(text => {
+                let message;
+                try {
+                    const json = JSON.parse(text);
+                    message = json.error || 'Something went wrong.';
+                    console.error('Error:', json);
+                } catch {
+                    message = text || 'Unexpected error.';
+                }
+                alert(message);
+            });
         }
         return response.json();
     }).then(() => {
@@ -36,13 +50,14 @@ function loadImagesFromServer() {
             throw new Error('Network response was not ok');
         }
         return response.json();
-    }).then(images => {
+    }).then(data => {
+        const images = data.images;
         const imageListElement = document.getElementById('imageList');
         imageListElement.innerHTML = '';
         images.forEach(image => {
             const imgElement = document.createElement('img');
-            imgElement.alt = image;
-            imgElement.src = `${BACKEND_URL}/images/${image}`;
+            imgElement.alt = image.filename;
+            imgElement.src = `data:image/*;base64,${image.data}`;
             imgElement.style.width = '100px';
             imgElement.style.margin = '5px';
             imageListElement.appendChild(imgElement);
