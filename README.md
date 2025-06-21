@@ -66,3 +66,13 @@ kubectl delete configmap --all -n exam-richard
 ```bash
 kubectl delete secret --all -n exam-richard
 ```
+
+### Create a Secret
+```bash
+
+kubectl create secret docker-registry regcred --docker-server=docker.io --docker-username={dockehub_username} --docker-password={dockerhub_password} --docker-email={dockerhub_email} -n exam-richard
+
+template.spec:
+      imagePullSecrets:
+      - name: regcred <-- secret
+```
