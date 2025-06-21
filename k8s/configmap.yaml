@@ -4,6 +4,6 @@ metadata:
   name: exam-richard-config
   namespace: exam-richard
 data:
-  UPLOAD_FOLDER: "/mnt/data/uploads"
+  UPLOAD_FOLDER: "/app/uploads"
   MAX_FILE_SIZE: "10485760"
     

@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: exam-richard-pvc
   namespace: exam-richard
-
 spec:
   storageClassName: manual
   accessModes:

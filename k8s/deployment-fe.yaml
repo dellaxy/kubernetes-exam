@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: exam-richard-deployment-fe
+  name: deployment-frontend
   namespace: exam-richard
 spec:
   replicas: 1
@@ -14,7 +14,7 @@ spec:
         app: frontend
     spec: 
       containers:
-      - name: frontend
+      - name: frontend-container
         image: dellaxy/exam-frontend:latest
         ports:
           - containerPort: 80

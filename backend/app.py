@@ -3,10 +3,12 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 MAX_FILE_SIZE = os.environ.get('MAX_FILE_SIZE')
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def allowed_file_size(file):
     file.seek(0, os.SEEK_END)
@@ -42,3 +44,6 @@ def get_images():
         return jsonify({'images': images}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+if __name__ == "__main__":
+    app.run()

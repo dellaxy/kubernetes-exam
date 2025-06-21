@@ -1,6 +1,10 @@
 docker build --no-cache -t dellaxy/image_name:latest -f Dockerfile .
 docker push dellaxy/image_name:latest
 
+docker run -p 8080:80 dellaxy/frontend:latest
+
+
+
 
 kubectl get pods -n exam-richard
 kubectl describe pod pod_name -n exam-richard

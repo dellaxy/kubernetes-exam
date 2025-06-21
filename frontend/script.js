@@ -1,11 +1,7 @@
-const BACKEND_URL = '/api';
-
-const imageListElement = document.getElementById('imageList')
-const uploadForm = document.getElementById('uploadForm')
-
-
-uploadForm.addEventListener('submit', function (event) {
-    event.preventDefault();
+const BACKEND_URL = 'http://localhost:30050';
+document.getElementById('uploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    uploadImage();
 });
 
 function uploadImage() {
@@ -41,10 +37,12 @@ function loadImagesFromServer() {
         }
         return response.json();
     }).then(images => {
+        const imageListElement = document.getElementById('imageList');
         imageListElement.innerHTML = '';
         images.forEach(image => {
             const imgElement = document.createElement('img');
             imgElement.alt = image;
+            imgElement.src = `${BACKEND_URL}/images/${image}`;
             imgElement.style.width = '100px';
             imgElement.style.margin = '5px';
             imageListElement.appendChild(imgElement);

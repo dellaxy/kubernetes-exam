@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 
 <body>
-    <form method="POST" id="uploadForm">
-        <input type="file" id="fileInput" required>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" id="fileInput" required>
         <button type="submit">Upload</button>
     </form>
 
@@ -18,5 +17,6 @@
     <div id="imageList">
     </div>
 </body>
+<script src="script.js"></script>
 
 </html>
