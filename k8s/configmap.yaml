@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exam-richard-config
+  namespace: exam-richard
+data:
+  UPLOAD_FOLDER: "/mnt/data/uploads"
+  MAX_FILE_SIZE: "10485760"
+    

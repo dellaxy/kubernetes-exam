@@ -1,0 +1,16 @@
+docker build --no-cache -t dellaxy/image_name:latest -f Dockerfile .
+docker push dellaxy/image_name:latest
+
+
+kubectl get pods -n exam-richard
+kubectl describe pod pod_name -n exam-richard
+
+kubectl rollout restart deployment/deployment_name -n exam-richard 
+
+kubectl delete deployment exam-richard-deployment-be -n exam-richard
+
+when editing PV/PVC delete all pods and deployments using them before deleting the PV/PVC itself
+kubectl delete all --all -n exam-richard
+kubectl delete pvc --all -n exam-richard
+kubectl delete configmap --all -n exam-richard
+kubectl delete secret --all -n exam-richard
