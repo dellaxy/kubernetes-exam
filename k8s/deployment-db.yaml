@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-database
+  namespace: exam-richard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "exam_db"
+        - name: POSTGRES_USER
+          value: "exam_user"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
+        volumeMounts:
+        - name: db-storage
+          mountPath: /var/lib/postgresql/data
+          subPath: database
+      volumes:
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: exam-richard-pvc

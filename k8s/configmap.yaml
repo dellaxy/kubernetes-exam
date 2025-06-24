@@ -6,4 +6,7 @@ metadata:
 data:
   UPLOAD_FOLDER: "/app/uploads"
   MAX_FILE_SIZE: "10485760"
+  DB_HOST: "database-service.exam-richard.svc.cluster.local"
+  DB_NAME: "exam_db"
+  DB_USER: "exam_user"
     

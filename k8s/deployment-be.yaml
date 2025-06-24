@@ -21,6 +21,12 @@ spec:
         envFrom:
         - configMapRef:
             name: exam-richard-config
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
         volumeMounts:
           - name: uploads-volume
             mountPath: /app/uploads
